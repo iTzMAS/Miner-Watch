@@ -5,7 +5,7 @@ Commonly used for cryptocurrency miners as they tend to crash a lot.
 
 
 
-Features:
+# Features:
 
 1- Timeout Between Each Check For Running App
 
@@ -24,7 +24,7 @@ Features:
 
 
 
-Future Updates:
+# Future Updates:
 
 1- Option to launch with admin permission
 
@@ -35,5 +35,6 @@ Future Updates:
 
 If you have any issues or suggestions please tell me so I can implment them.
 
+# Donations:
 
-If you wish to donate to me you can ask me for a cryptocurrency address in my discord server:
+> If you wish to donate to me you can ask me for a cryptocurrency address in `my discord server`:
