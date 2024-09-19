@@ -37,4 +37,4 @@ If you have any issues or suggestions please tell me so I can implment them.
 
 # Donations:
 
-> If you wish to donate to me you can ask me for a cryptocurrency address in (`my discord server`)[https://discord.gg/GAjZTYd94M]
+> If you wish to donate to me you can ask me for a cryptocurrency address in [`my discord server`](https://discord.gg/GAjZTYd94M)
