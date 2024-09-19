@@ -30,10 +30,10 @@ Commonly used for cryptocurrency miners as they tend to crash a lot.
 
 2- Option to launch the program in another cmd if the executable is cmd based.
 
-3- Option to use it inside powershell instead of cmd (Might be deleted due to powershell being updated)
+3- Option to use it inside PowerShell instead of cmd (Might be deleted due to PowerShell being updated)
 
 
-If you have any issues or suggestions please tell me so I can implement them.
+If you have any issues or suggestions, please tell me so I can implement them.
 
 # Donations:
 
