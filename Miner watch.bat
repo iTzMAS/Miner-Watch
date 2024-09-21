@@ -62,14 +62,23 @@ set /p timer="Please enter the check interval for watch miner (Time between each
 echo.
 set /p priority="Please enter the Priority you want the process to run as(Low, Belownormal, Normal, Abovenormal, High, Realtime): "
 echo.
+choice /c YN /m "Do you want the program to monitor the miner for cpu usage and restart it when the cpu usage is low?"
+if '%errorlevel%'=='1' set cpu_check="YES"
+if '%errorlevel%'=='2' set cpu_check="NO"
+echo.
+set /p cpu_usage="Please enter the cpu usage precent that the app monitors for restarting the app: (if the cpu usage is bellow this number it restarts the miner): "
+echo. 
 echo miner_location=%miner_location% >"config.txt"
 echo miner_name=%miner_name% >>"config.txt"
 echo miner_command=%miner_command% >>"config.txt"
 echo timer=%timer% >>"config.txt"
 echo priority=%priority% >>"config.txt"
+echo cpu_check=%cpu_check% >>"config.txt"
+echo cpu_usage=%cpu_usage% >>"config.txt"
 goto menu
 
 :miner
+cls
 echo.
 set /p miner_location="Please enter the location of the miner (example: C:\mining): "
 echo.
@@ -81,22 +90,49 @@ set /p timer="Please enter the check interval for watch miner (Time between each
 echo.
 set /p priority="Please enter the Priority you want the process to run as(Low, Belownormal, Normal, Abovenormal, High, Realtime): "
 echo.
+choice /c YN /m "Do you want the program to monitor the miner for cpu usage and restart it when the cpu usage is low?"
+if '%errorlevel%'=='1' set cpu_check="YES"
+if '%errorlevel%'=='2' set cpu_check="NO"
+echo.
+set /p cpu_usage="Please enter the cpu usage precent that the app monitors for restarting the app: (if the cpu usage is bellow this number it restarts the miner): "
+echo. 
 
 :Miner_Watch
+cls
 Title Miner Watch is running...
-:check_app
 
+:check_app
 tasklist | find /i "%miner_name%">nul
 if "%errorlevel%"=="0" (
     echo The Miner Is Still Running...
-    Timeout /t %timer% /nobreak >null
-    goto check_app
+    
+	Timeout /t %timer% /nobreak >nul
+    goto cpu
 ) else (
-start /b /%priority%%miner_location:~0,-1%\%miner_name%%miner_command%
+start /b /%priority%%miner_location: =%\%miner_name%%miner_command%
 )
 goto check_app
 exit
+:cpu
+if %cpu_check%=="YES" (
+    goto cpu_checker
+	) else (
+	goto check_app
+	)
 
+:cpu_checker
+for /f "skip=1 tokens=1" %%a in ('wmic cpu get loadpercentage') do (
+    set cpu_load=%%a
+	goto :cpu_checker2
+	)
+:cpu_checker2
+if %cpu_load% LEQ %cpu_usage% (
+	taskkill /f /im %miner_name: =%
+	goto check_app
+	) else (
+	goto check_app
+	)
+	
 :Delete
 cls
 set sure=0
@@ -105,7 +141,7 @@ if "%sure%"=="YES" (
     del "config.txt"
     echo Config file deleted!
     Timeout /t 5 /nobreak
-goto menu
-) else (
-goto menu
-)
+    goto menu
+    ) else (
+    goto menu
+    )
