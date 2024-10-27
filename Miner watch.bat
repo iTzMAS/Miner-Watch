@@ -126,7 +126,7 @@ for /f "skip=1 tokens=1" %%a in ('wmic cpu get loadpercentage') do (
 	goto :cpu_checker2
 	)
 :cpu_checker2
-if %cpu_load% LEQ %cpu_usage% (
+if %cpu_load% LEQ %cpu_usage: =% (
 	taskkill /f /im %miner_name: =%
 	goto check_app
 	) else (
